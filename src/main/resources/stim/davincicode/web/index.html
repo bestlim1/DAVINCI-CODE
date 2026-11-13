@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DAVINCI CODE</title>
+  <meta name="description" content="상대의 숨겨진 숫자를 먼저 밝혀내는 추리 대결. 브라우저에서 바로 하는 2~4인 온라인 대전.">
+  <meta name="theme-color" content="#0B1020">
+  <link rel="icon" href="icon-192.png">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <noscript><p class="noscript">이 게임은 JavaScript가 켜져 있어야 해요.</p></noscript>
+
+  <!-- 첫 화면: 프로필 정하고 입장 -->
+  <section id="screen-start" class="screen start">
+    <div class="floaters" id="floaters" aria-hidden="true"></div>
+    <div class="start-wrap">
+      <div class="logo" aria-label="DAVINCI CODE">
+        <div class="logo-tiles" id="logo-tiles"></div>
+        <h1><span>DAVINCI</span> <b>CODE</b></h1>
+      </div>
+      <p class="tagline">상대의 숨겨진 숫자를 먼저 밝혀내는 추리 대결</p>
+      <form class="card start-card" id="start-form" autocomplete="off">
+        <label class="lbl">캐릭터</label>
+        <div id="avatar-pick" class="avatar-pick" role="radiogroup" aria-label="캐릭터 고르기"></div>
+        <label class="lbl" for="nick">닉네임</label>
+        <input id="nick" class="input" maxlength="10" placeholder="2~10글자 · 한글, 영문, 숫자, _" autocomplete="nickname" spellcheck="false">
+        <p id="start-err" class="err" role="alert"></p>
+        <label class="agree" id="agree-row"><input type="checkbox" id="agree"> <span>이용 규칙과 <a href="#" id="privacy-link">개인정보 처리방침</a>에 동의해요</span></label>
+        <button id="enter" class="btn primary big" type="submit">입장하기</button>
+        <p class="server-line">서버 <b id="server-host"></b></p>
+      </form>
+      <button class="btn ghost" id="how-start" type="button">게임 방법</button>
+    </div>
+    <footer class="start-foot">v1.3.1 · Team STIM · 웹 버전</footer>
+  </section>
+
+  <!-- 로비 -->
+  <section id="screen-lobby" class="screen" hidden>
+    <header class="topbar">
+      <div class="mini-logo"><span>DAVINCI</span><b>CODE</b></div>
+      <span class="pill" id="lobby-server"></span>
+      <span class="pill" id="lobby-ping"></span>
+      <div class="spacer"></div>
+      <button class="icon-btn" id="btn-how" title="게임 방법" type="button"></button>
+      <button class="icon-btn" id="btn-settings" title="설정" type="button"></button>
+      <button class="icon-btn" id="btn-exit" title="나가기" type="button"></button>
+      <div class="me click" id="lobby-me" role="button" tabindex="0" title="눌러서 닉네임·캐릭터 바꾸기"></div>
+    </header>
+    <div class="lobby-body" data-tab="rooms">
+      <main class="rooms-col">
+        <div class="rooms-head">
+          <h2>게임 방 <small id="room-count"></small></h2>
+          <div class="seg small" id="room-filter"></div>
+          <div class="rooms-actions">
+            <button class="btn mint" id="btn-quick" type="button"></button>
+            <button class="btn primary" id="btn-create" type="button"></button>
+          </div>
+        </div>
+        <div id="room-list" class="room-list"></div>
+      </main>
+      <aside class="side-col">
+        <div class="card users-card">
+          <h3 id="user-count">접속자</h3>
+          <div id="user-list" class="user-list"></div>
+        </div>
+        <div class="card chat-card" id="lobby-chat"></div>
+      </aside>
+    </div>
+    <nav class="mobile-tabs" id="lobby-tabs">
+      <button data-tab="rooms" class="on" type="button">게임 방</button>
+      <button data-tab="users" type="button">접속자</button>
+      <button data-tab="chat" type="button">채팅 <i class="dot" hidden></i></button>
+    </nav>
+  </section>
+
+  <!-- 방 (대기실 / 게임) -->
+  <section id="screen-room" class="screen" hidden>
+    <header class="topbar">
+      <button class="btn ghost small" id="btn-leave" type="button"></button>
+      <h2 class="room-title" id="room-title"></h2>
+      <span class="chip" id="room-id"></span>
+      <span class="chip info" id="room-info"></span>
+      <div class="spacer"></div>
+      <span class="pill" id="room-specs" hidden></span>
+      <span class="pill" id="room-ping"></span>
+      <button class="icon-btn" id="btn-room-how" title="게임 방법" type="button"></button>
+      <button class="icon-btn" id="btn-room-settings" title="설정" type="button"></button>
+    </header>
+    <div class="room-body">
+      <main class="room-main">
+        <div id="waiting" class="waiting"></div>
+        <div id="board" class="board" hidden></div>
+      </main>
+      <aside class="room-side" id="room-chat"></aside>
+    </div>
+    <button class="chat-fab" id="chat-fab" type="button">채팅 <i class="badge" hidden></i></button>
+  </section>
+
+  <div id="modals"></div>
+  <div id="toasts" aria-live="polite"></div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+</body>
+</html>
